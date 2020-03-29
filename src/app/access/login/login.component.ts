@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
+  @Output() showRegister: Subject<boolean> = new Subject<boolean>();
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  showRegisterForm() {
+    this.showRegister.next(true);
   }
 
 }

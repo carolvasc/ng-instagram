@@ -3,9 +3,15 @@
     <div class="col-sm-6 d-flex justify-content-end" [@banner-animation]="bannerState">
       <app-banner></app-banner>
     </div>
-    <div class="col-sm-6 d-flex justify-content-start">
-      <!-- <app-login></app-login> -->
-      <app-register></app-register>
+    <div *ngIf="register; else login">
+      <div class="col-sm-6 d-flex justify-content-start" [@panel-animation]="panelState">
+        <app-register (showRegister)="showRegisterForm($event)"></app-register>
+      </div>
     </div>
+    <ng-template #login>
+      <div class="col-sm-6 d-flex justify-content-start" [@panel-animation]="panelState">
+        <app-login (showRegister)="showRegisterForm($event)"></app-login>
+      </div>
+    </ng-template>
   </div>
 </div>
