@@ -4,12 +4,12 @@
       <app-banner></app-banner>
     </div>
     <div *ngIf="register; else login">
-      <div class="col-sm-6 d-flex justify-content-start" [@panel-animation]="panelState">
+      <div class="col-sm-6 d-flex justify-content-start" [@panel-animation]="panelState" (@panel-animation.start)="startAnimation" (@panel-animation.done)="finishAnimation">
         <app-register (showRegister)="showRegisterForm($event)"></app-register>
       </div>
     </div>
     <ng-template #login>
-      <div class="col-sm-6 d-flex justify-content-start" [@panel-animation]="panelState">
+      <div class="col-sm-6 d-flex justify-content-start" [@panel-animation]="panelState" (@panel-animation.start)="startAnimation" (@panel-animation.done)="finishAnimation">
         <app-login (showRegister)="showRegisterForm($event)"></app-login>
       </div>
     </ng-template>
