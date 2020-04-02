@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
   get password() { return this.registerForm.get('password').value };
 
   @Output() showRegister: Subject<boolean> = new Subject<boolean>();
-  user: User;
+  user: User = new User();
 
   constructor(private accessService: AccessService) { }
 
@@ -43,8 +43,8 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(new User(this.email, this.name, this.userName, this.password));
-    
+    this.user = new User(this.email, this.name, this.userName, this.password);
+
     this.accessService.registerUser(this.user);
   }
 
