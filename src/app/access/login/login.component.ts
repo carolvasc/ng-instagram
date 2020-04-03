@@ -1,6 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { AccessService } from '../access.service';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,9 @@ import { Subject } from 'rxjs';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  get email() { return this.loginForm.get('email').value };
-  get password() { return this.loginForm.get('password').value };
-
   @Output() showRegister: Subject<boolean> = new Subject<boolean>();
 
-  constructor() { }
+  constructor(private accessService: AccessService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -33,7 +31,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.loginForm.value)
+    const { email, password } = this.loginForm.value;
+
+    this.accessService.login(email, password);
   }
 
 }
