@@ -27,3 +27,5 @@ export class AppComponent implements OnInit {
     firebase.analytics();
   }
 }
+
+// Teste de configuração de commits
