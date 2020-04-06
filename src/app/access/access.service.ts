@@ -4,8 +4,8 @@ import 'firebase/auth';
 import 'firebase/database';
 
 export class AccessService {
-  registerUser(user: User) {
-    firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+  registerUser(user: User): Promise<any> {
+    return firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
       .then(response => {
         // Remoção da senha antes se registrar o usuário
         delete user.password;
