@@ -11,10 +11,11 @@ import { AccessComponent } from './access/access.component';
 import { BannerComponent } from './access/banner/banner.component';
 import { LoginComponent } from './access/login/login.component';
 import { RegisterComponent } from './access/register/register.component';
-
-import { AccessService } from './access/access.service';
 import { HomeComponent } from './home/home.component';
 import { PostsComponent } from './home/posts/posts.component';
+
+import { AccessService } from './access/access.service';
+import { AuthGuard } from './auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { PostsComponent } from './home/posts/posts.component';
   ],
   providers: [
     AccessService,
+    AuthGuard,
   ],
   bootstrap: [AppComponent]
 })
