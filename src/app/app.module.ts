@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
+import { ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { AccessComponent } from './access/access.component';
@@ -27,6 +30,7 @@ import { PostsComponent } from './home/posts/posts.component';
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    RouterModule.forRoot(ROUTES),
   ],
   providers: [
     AccessService,
