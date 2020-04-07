@@ -15,6 +15,7 @@ export class AddPostComponent implements OnInit {
   get title() { return this.postForm.get('title').value; }
 
   email: string = null;
+  image: any = null;
 
   constructor(private homeService: HomeService) { }
 
@@ -32,7 +33,11 @@ export class AddPostComponent implements OnInit {
   }
 
   onSubmit() {
-    this.homeService.createPost({ email: this.email, title: this.title });
+    this.homeService.createPost({ email: this.email, title: this.title, image: this.image[0] });
+  }
+
+  prepareImageUpload(event: Event) {
+    this.image = (<HTMLInputElement>event.target).files;
   }
 
 }
