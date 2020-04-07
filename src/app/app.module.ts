@@ -16,6 +16,7 @@ import { PostsComponent } from './home/posts/posts.component';
 
 import { AccessService } from './access/access.service';
 import { AuthGuard } from './auth-guard.service';
+import { AddPostComponent } from './home/add-post/add-post.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AuthGuard } from './auth-guard.service';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    PostsComponent
+    PostsComponent,
+    AddPostComponent
   ],
   imports: [
     BrowserModule,
