@@ -10,6 +10,8 @@ import { LoginComponent } from './access/login/login.component';
 import { RegisterComponent } from './access/register/register.component';
 
 import { AccessService } from './access/access.service';
+import { HomeComponent } from './home/home.component';
+import { PostsComponent } from './home/posts/posts.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { AccessService } from './access/access.service';
     AccessComponent,
     BannerComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
