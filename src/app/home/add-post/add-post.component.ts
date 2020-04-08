@@ -1,9 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { HomeService } from '../home.service';
+
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+
+import { HomeService } from '../home.service';
+import { ProgressService } from 'src/app/progress.service';
+
+import { interval, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-post',
@@ -17,7 +23,7 @@ export class AddPostComponent implements OnInit {
   email: string = null;
   image: any = null;
 
-  constructor(private homeService: HomeService) { }
+  constructor(private homeService: HomeService, private progressService: ProgressService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -34,6 +40,23 @@ export class AddPostComponent implements OnInit {
 
   onSubmit() {
     this.homeService.createPost({ email: this.email, title: this.title, image: this.image[0] });
+
+    const { status, state } = this.progressService;
+
+    let upload = interval(1500);
+
+    let inProgress = new Subject();
+    inProgress.next(true);
+
+    upload
+      .pipe(takeUntil(inProgress))
+      .subscribe(() => {
+        console.log(state);
+        console.log(status);
+
+        if (status === 'done')
+          inProgress.next(false);
+      });
   }
 
   prepareImageUpload(event: Event) {
