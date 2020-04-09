@@ -41,4 +41,40 @@ export class HomeService {
           )
       });
   }
+
+  /**
+   * Retorna um objeto com o post
+   * @param email 
+   */
+  getPosts(email: string) {
+    return new Promise((resolve, reject) => {
+      // Consultar os posts
+      firebase.database().ref(`posts/${btoa(email)}`)
+        .once('value')
+        .then(snapshot => {
+          let posts = [];
+
+          snapshot.forEach(childSnapshot => {
+            let post = childSnapshot.val();
+
+            // Consultar a url da imagem
+            firebase.storage().ref()
+              .child(`images/${childSnapshot.key}`)
+              .getDownloadURL()
+              .then((url: string) => {
+                post.imageUrl = url;
+
+                // Consultar o usuário para recuperar o nome
+                firebase.database().ref(`user_detail/${btoa(email)}`)
+                  .once('value')
+                  .then(snapshot => {
+                    post.userName = snapshot.val().userName;
+                    posts.push(post);
+                  });
+              });
+          });
+          resolve(posts);
+        });
+    });
+  }
 }

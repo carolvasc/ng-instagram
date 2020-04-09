@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+import { HomeService } from '../home.service';
+
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
@@ -7,9 +12,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostsComponent implements OnInit {
 
-  constructor() { }
+  email: string = null;
+  posts = [];
+
+  constructor(private homeService: HomeService) { }
 
   ngOnInit(): void {
+    firebase.auth().onAuthStateChanged(user => {
+      this.email = user.email;
+
+      this.reloadTimeline();
+    });
+  }
+
+  /** Atualiza a timeline */
+  reloadTimeline() {
+    this.homeService.getPosts(this.email)
+      .then(response => this.posts = response as []);
   }
 
 }
