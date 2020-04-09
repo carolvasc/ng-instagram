@@ -22,19 +22,23 @@ export class HomeService {
     let fileName = md5.appendStr(image.name).end();
     fileName += (Math.round(Math.random() * 1000000)).toString();
 
-    firebase.storage().ref()
-      .child(`images/${fileName}`)
-      .put(image)
-      .on(firebase.storage.TaskEvent.STATE_CHANGED,
-        snapshot => {
-          this.progressService.status = 'progress';
-          this.progressService.state = snapshot;
-        },
-        error => this.progressService.status = 'error',
-        () => this.progressService.status = 'done'
-      )
+    firebase.database().ref(`posts/${btoa(email)}`)
+      .push({ title: title })
+      .then((response) => {
+        fileName = response.key;
 
-    // firebase.database().ref(`posts/${btoa(email)}`)
-    //   .push({ title: title });
+        // Upload da imagem
+        firebase.storage().ref()
+          .child(`images/${fileName}`)
+          .put(image)
+          .on(firebase.storage.TaskEvent.STATE_CHANGED,
+            snapshot => {
+              this.progressService.status = 'progress';
+              this.progressService.state = snapshot;
+            },
+            () => this.progressService.status = 'error',
+            () => this.progressService.status = 'done'
+          )
+      });
   }
 }

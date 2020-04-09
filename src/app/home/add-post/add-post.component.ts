@@ -23,6 +23,9 @@ export class AddPostComponent implements OnInit {
   email: string = null;
   image: any = null;
 
+  postProgress: string = 'pending';
+  percentage: number = 0;
+
   constructor(private homeService: HomeService, private progressService: ProgressService) { }
 
   ngOnInit(): void {
@@ -41,8 +44,6 @@ export class AddPostComponent implements OnInit {
   onSubmit() {
     this.homeService.createPost({ email: this.email, title: this.title, image: this.image[0] });
 
-    const { status, state } = this.progressService;
-
     let upload = interval(1500);
 
     let inProgress = new Subject();
@@ -51,11 +52,14 @@ export class AddPostComponent implements OnInit {
     upload
       .pipe(takeUntil(inProgress))
       .subscribe(() => {
-        console.log(state);
-        console.log(status);
+        this.postProgress = 'progress';
 
-        if (status === 'done')
+        this.percentage = Math.round((this.progressService.state.bytesTransferred / this.progressService.state.totalBytes) * 100);
+
+        if (this.progressService.status === 'done') {
+          this.postProgress = 'done';
           inProgress.next(false);
+        }
       });
   }
 
