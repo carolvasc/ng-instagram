@@ -57,10 +57,18 @@ export class HomeService {
 
           snapshot.forEach(childSnapshot => {
             let post = childSnapshot.val();
+            post.key = childSnapshot.key;
 
+            posts.push(post);
+          });
+
+          return posts.reverse(); // ordem dos posts por ordem decrescente
+        })
+        .then(posts => {
+          posts.forEach(post => {
             // Consultar a url da imagem
             firebase.storage().ref()
-              .child(`images/${childSnapshot.key}`)
+              .child(`images/${post.key}`)
               .getDownloadURL()
               .then((url: string) => {
                 post.imageUrl = url;
@@ -70,7 +78,6 @@ export class HomeService {
                   .once('value')
                   .then(snapshot => {
                     post.userName = snapshot.val().userName;
-                    posts.push(post);
                   });
               });
           });

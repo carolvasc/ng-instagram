@@ -5,15 +5,12 @@
         <p class="card-text"><strong>{{ post.userName }}</strong></p>
       </div>
 
-      <img class="card-img" [src]="post.imageUrl" /> 
+      <img class="card-img" [src]="post.imageUrl || ''" /> 
 
       <div class="card-body">
         <p class="card-text">
           <strong>{{ post.userName }}</strong> {{ post.title }}
         </p>
-
-        <hr />
-        <input type="text" class="form-control comentario" placeholder="Adicione um comentário..." />
       </div>
     </div>
   </div>
