@@ -50,6 +50,7 @@ export class HomeService {
     return new Promise((resolve, reject) => {
       // Consultar os posts
       firebase.database().ref(`posts/${btoa(email)}`)
+        .orderByKey()
         .once('value')
         .then(snapshot => {
           let posts = [];

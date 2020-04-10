@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 import * as firebase from 'firebase/app';
@@ -18,13 +18,15 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class AddPostComponent implements OnInit {
   postForm: FormGroup;
-  get title() { return this.postForm.get('title').value; }
-
-  email: string = null;
+  
   image: any = null;
-
-  postProgress: string = 'pending';
+  email: string = null;
   percentage: number = 0;
+  postProgress: string = 'pending';
+
+  @Output() updateTimeline: Subject<any> = new Subject(); 
+
+  get title() { return this.postForm.get('title').value; }
 
   constructor(private homeService: HomeService, private progressService: ProgressService) { }
 
@@ -58,6 +60,7 @@ export class AddPostComponent implements OnInit {
 
         if (this.progressService.status === 'done') {
           this.postProgress = 'done';
+          this.updateTimeline.next();
           inProgress.next(false);
         }
       });
