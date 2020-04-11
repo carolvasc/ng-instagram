@@ -15,9 +15,8 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
     ]),
     trigger('panel-animation', [
       state('created', style({ opacity: 1 })),
-      transition('void => created', [
-        style({ opacity: 0, transform: 'translate(50px, 0)' }),
-        animate('1.5s 0s ease-in-out', keyframes([
+      transition('* => created', [
+        animate('1s 0s ease-in-out', keyframes([
           style({ offset: 0.15, opacity: 1, transform: 'translateX(0)' }),
           style({ offset: 0.86, opacity: 1, transform: 'translateX(0)' }),
 
@@ -35,7 +34,7 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
 export class AccessComponent implements OnInit {
 
   bannerState: string = 'created';
-  panelState: string = 'created';
+  panelState: string = '';
 
   register: boolean = false;
 
@@ -46,6 +45,11 @@ export class AccessComponent implements OnInit {
 
   showRegisterForm(event: boolean) {
     this.register = event;
+  }
+
+  hasError() {
+    this.panelState = 'created';
+    setTimeout(() => this.panelState = '', 1000);
   }
 
   startAnimation() { }

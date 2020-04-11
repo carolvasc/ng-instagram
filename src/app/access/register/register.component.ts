@@ -21,7 +21,9 @@ export class RegisterComponent implements OnInit {
   get password() { return this.registerForm.get('password').value };
 
   @Output() showRegister: Subject<boolean> = new Subject<boolean>();
+  @Output() hasError: Subject<boolean> = new Subject<boolean>();
   user: User = new User();
+  errorMessage: boolean = false;
 
   constructor(private accessService: AccessService) { }
 
@@ -46,7 +48,14 @@ export class RegisterComponent implements OnInit {
     this.user = new User(this.email, this.name, this.userName, this.password);
 
     this.accessService.registerUser(this.user)
-      .then(() => this.showRegisterForm())
+      .then((response) => {
+        if(response !== false){
+          this.showRegisterForm();
+        } else {
+          this.hasError.next();
+          setTimeout(() => this.errorMessage = true, 700);
+        }
+      });
   }
 
 }

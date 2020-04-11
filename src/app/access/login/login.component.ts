@@ -12,6 +12,9 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   @Output() showRegister: Subject<boolean> = new Subject<boolean>();
+  @Output() hasError: Subject<boolean> = new Subject<boolean>();
+
+  errorMessage: boolean = false;
 
   constructor(private accessService: AccessService) { }
 
@@ -33,7 +36,13 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const { email, password } = this.loginForm.value;
 
-    this.accessService.login(email, password);
+    this.accessService.login(email, password)
+      .then(response => {
+        if (response === false)
+          this.hasError.next();
+
+          setTimeout(() => this.errorMessage = true, 700);
+      });
   }
 
 }

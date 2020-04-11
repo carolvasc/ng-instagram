@@ -23,14 +23,14 @@ export class AccessService {
           .set(user)
       })
       .catch((error: Error) => {
-        console.log(error);
+        return false;
       })
   }
 
   login(email: string, password: string) {
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    return firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
-        firebase.auth().currentUser.getIdToken()
+        return firebase.auth().currentUser.getIdToken()
           .then((token: string) => {
             if (token) {
               this.tokenJwt = token;
@@ -39,7 +39,9 @@ export class AccessService {
             }
           })
       })
-      .catch((error: Error) => console.log(error))
+      .catch((error: Error) => { 
+        return false;
+      })
   }
 
   auth(): boolean {

@@ -17,7 +17,10 @@
       <button type="submit" class="btn btn-primary btn-sm btn-block">Cadastre-se</button>
     </form>
     <hr />
-    <p class="small text-center">Ao cadastrar-se, você concorda com nossos Termos e Política de Privacidade</p>
+    <p class="small text-center">Ao cadastrar-se, você concorda com nossos <strong>Termos</strong> e <strong>Política de Privacidade</strong></p>
+    <p class="small text-danger text-center mt-4" *ngIf="errorMessage">
+      Preencha os campos corretamente.
+    </p>
   </div>
 </div>
 <br />
