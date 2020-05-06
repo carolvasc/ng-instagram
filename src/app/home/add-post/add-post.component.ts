@@ -18,13 +18,13 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class AddPostComponent implements OnInit {
   postForm: FormGroup;
-  
+
   image: any = null;
   email: string = null;
   percentage: number = 0;
   postProgress: string = 'pending';
 
-  @Output() updateTimeline: Subject<any> = new Subject(); 
+  @Output() updateTimeline: Subject<any> = new Subject();
 
   get title() { return this.postForm.get('title').value; }
 
@@ -60,8 +60,14 @@ export class AddPostComponent implements OnInit {
 
         if (this.progressService.status === 'done') {
           this.postProgress = 'done';
+
           this.updateTimeline.next();
           inProgress.next(false);
+
+          setTimeout(() => {
+            // Fechar modal
+            this.postProgress = 'pending';
+          }, 3000);
         }
       });
   }
