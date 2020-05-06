@@ -10,6 +10,7 @@ import { AccessService } from '../access.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  loading: boolean = false;
 
   @Output() showRegister: Subject<boolean> = new Subject<boolean>();
   @Output() hasError: Subject<boolean> = new Subject<boolean>();
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     const { email, password } = this.loginForm.value;
 
     this.accessService.login(email, password)
@@ -41,7 +43,9 @@ export class LoginComponent implements OnInit {
         if (response === false)
           this.hasError.next();
 
-          setTimeout(() => this.errorMessage = true, 700);
+        this.loading = false;
+
+        setTimeout(() => this.errorMessage = true, 700);
       });
   }
 

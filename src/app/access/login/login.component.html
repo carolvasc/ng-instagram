@@ -8,7 +8,9 @@
       <div class="form-group">
         <input type="password" formControlName="password" class="form-control" placeholder="Senha">
       </div>
-      <button type="submit" class="btn btn-primary btn-sm btn-block">Entrar</button>
+      <button type="submit" class="btn btn-primary btn-sm btn-block" [disabled]=loading>
+        {{!loading ? 'Entrar' : '...'}}
+      </button>
     </form>
     <div *ngIf="errorMessage">
       <hr />

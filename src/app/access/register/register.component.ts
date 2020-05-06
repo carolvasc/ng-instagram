@@ -14,6 +14,7 @@ import { AccessService } from '../access.service';
 
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  loading: boolean = false;
 
   get email() { return this.registerForm.get('email').value };
   get name() { return this.registerForm.get('name').value };
@@ -45,6 +46,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     this.user = new User(this.email, this.name, this.userName, this.password);
 
     this.accessService.registerUser(this.user)
@@ -55,6 +57,7 @@ export class RegisterComponent implements OnInit {
           this.hasError.next();
           setTimeout(() => this.errorMessage = true, 700);
         }
+        this.loading = false;
       });
   }
 
