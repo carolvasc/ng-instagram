@@ -8,7 +8,7 @@ import { AccessService } from '../access/access.service';
 })
 export class HomeComponent implements OnInit {
 
-  @ViewChild('posts') posts;
+  @ViewChild('postsComponent') posts;
 
   constructor(private accessService: AccessService) { }
 

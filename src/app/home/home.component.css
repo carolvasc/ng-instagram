@@ -18,3 +18,8 @@
     height: 32px;
     float: left;
 }
+
+.no-post {
+    text-align: center;
+    color: gray;
+}
