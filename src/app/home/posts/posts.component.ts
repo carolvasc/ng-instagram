@@ -15,6 +15,8 @@ export class PostsComponent implements OnInit {
   email: string = null;
   posts = [];
 
+  loading: boolean = true;
+
   constructor(private homeService: HomeService) { }
 
   ngOnInit(): void {
@@ -28,7 +30,10 @@ export class PostsComponent implements OnInit {
   /** Atualiza a timeline */
   reloadTimeline() {
     this.homeService.getPosts(this.email)
-      .then(response => this.posts = response as []);
+      .then(response => { 
+        this.posts = response as [];
+        this.loading = false;
+      });
   }
 
 }

@@ -11,10 +11,13 @@
 </nav>
 
 <div class="container mt-5">
-  <p *ngIf="postsComponent.posts.length === 0" class="no-post">
+  <p *ngIf="postsComponent.posts.length === 0 && !postsComponent.loading" class="no-post">
     Você ainda não tem nenhum post! Clique em
     <img src="/assets/camera.png" alt="camera-instagram" width="26" height="26">
     para fazer sua primeira publicação.
+  </p>
+  <p *ngIf="postsComponent.loading" class="no-post">
+    Aguarde enquanto carregamos as suas publicações...
   </p>
   <app-posts #postsComponent></app-posts>
   <app-add-post (updateTimeline)="updateTimeline()"></app-add-post>
